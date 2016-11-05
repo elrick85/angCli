@@ -1,0 +1,10 @@
+<table>
+    <thead>
+    <tr>
+        <app-data-table-header *ngFor="let field of options.fields" [col]="field"></app-data-table-header>
+    </tr>
+    </thead>
+    <tbody>
+        <app-data-table-item *ngFor="let item of options.dataSource" [item]="item"></app-data-table-item>
+    </tbody>
+</table>

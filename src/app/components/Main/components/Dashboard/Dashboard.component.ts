@@ -3,16 +3,37 @@
  */
 
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {WordModel, DataTableOptions, FieldModel} from "../../../../Models/WordModel";
 
 @Component({
-  selector: 'dashboard',
-  template: require('./Dashboard.component.html')
-})
-export class DashboardComponent {
-  public hello: string;
+    selector: 'dashboard',
+    templateUrl: './Dashboard.component.html',
 
-  constructor() {
-    this.hello = 'Hello World!';
-  }
+})
+export class DashboardComponent implements OnInit {
+    public hello: string;
+
+    public tableOptions: DataTableOptions<WordModel> = DataTableOptions.Create<WordModel>();
+
+    constructor() {
+        this.hello = 'Hello World!';
+
+        let source: WordModel[] = [
+            {word: "hello", trans: "привет"}
+        ];
+
+        let fields:FieldModel[] = [
+            {name: "word", title: "Word"},
+            {name: "trans", title: "Translation"}
+        ];
+
+        this.tableOptions.dataSource = source;
+        this.tableOptions.fields = fields;
+
+    }
+
+    ngOnInit() {
+
+    }
 }
