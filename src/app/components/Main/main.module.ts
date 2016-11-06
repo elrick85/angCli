@@ -11,21 +11,28 @@ import {AuthService} from "../../services/auth.service";
 import {DataTableComponent} from './components/data-table/data-table.component';
 import {DataTableItemComponent} from './components/data-table-item/data-table-item.component';
 import {BrowserModule} from "@angular/platform-browser";
-import { DataTableHeaderComponent } from './components/data-table-header/data-table-header.component';
+import {DataTableHeaderComponent} from './components/data-table-header/data-table-header.component';
+import {HttpModule} from "@angular/http";
+import {DashboardService} from "./components/Dashboard/dashboard.service";
+import {DataUploadComponent} from './components/data-upload/data-upload.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
     imports: [
         BrowserModule,
-        routing
+        routing,
+        HttpModule,
+        FormsModule
     ],
     declarations: [
         MainFrameComponent,
         DashboardComponent,
         DataTableComponent,
         DataTableItemComponent,
-        DataTableHeaderComponent
+        DataTableHeaderComponent,
+        DataUploadComponent
     ],
-    providers: [GuardService, AuthService]
+    providers: [GuardService, AuthService, DashboardService]
 })
 export class MainModule {
 }

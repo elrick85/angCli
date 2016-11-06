@@ -6,6 +6,14 @@ export class WordModel {
     word: string;
 
     trans: string;
+
+    picture: string;
+
+    transcription: string;
+
+    example: string;
+
+    audio: string;
 }
 
 export interface IDataTableOptions {

@@ -2,7 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {FieldModel} from "../../../../Models/WordModel";
 
 @Component({
-    selector: 'app-data-table-header',
+    selector: '[app-data-table-header]',
     templateUrl: './data-table-header.component.html',
     styleUrls: ['./data-table-header.component.css']
 })
