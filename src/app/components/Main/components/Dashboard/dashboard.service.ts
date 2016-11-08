@@ -4,7 +4,10 @@
 
 import {Injectable} from "@angular/core";
 import {Http, Headers} from "@angular/http";
-import {WordModel} from "../../../../Models/WordModel";
+import {
+    WordModel, DataTableOptionsForRequest, DataTableOptions,
+    PaginationOptionsModel
+} from "../../../../Models/WordModel";
 import {Observable} from "rxjs";
 
 @Injectable()
@@ -16,19 +19,26 @@ export class DashboardService {
     constructor(private http: Http) {
     }
 
-    getWords(): Promise<WordModel[]> {
-        return this.http.get(this.wordsUrl)
+    getWords(options: DataTableOptionsForRequest): Promise<DataTableOptions<WordModel>> {
+        return this.http.post(this.wordsUrl, options.buildQuery())
             .toPromise()
-            .then(response => response.json() as WordModel[])
+            .then((responce) => {
+                let _res = responce.json();
+
+                var tbl = DataTableOptions.Create<WordModel>();
+                tbl.dataSource = _res.data as WordModel[];
+                tbl.pagination = _res.pagination as PaginationOptionsModel;
+
+                return tbl;
+            })
             .catch(this.handleError);
     }
 
     uploadFile(data): Promise<Boolean> {
         var headers = new Headers();
-        headers.append('Content-Type', 'multipart/form-data');
 
         return this.http
-            .post(this.uploadUrl, data, {headers: headers})
+            .post(this.uploadUrl, data)
             .toPromise()
             .then(data => true)
             .catch(this.handleError);

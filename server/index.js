@@ -5,15 +5,17 @@
 var express = require('express');
 var multer = require('multer');
 var path = require('path');
+var bodyParser = require('body-parser');
 var converter = require("./converter");
 var provider = require("./provider");
 
 var app = express();
 var upload = multer();
+var jsonParser = bodyParser.json()
 
 var errorHandler = function(res, err) {
     res.status(err.status || 500);
-    res.json({ error: err.message });
+    res.json({ message: err.message || err.error });
 };
 
 app.get('/api', function(req, res, next) {
@@ -24,7 +26,7 @@ app.post('/api/upload', upload.single("file"), function(req, res) {
     converter.byBuffer(req.file.buffer, function(data) {
         provider.add(data)
             .then(function(result) {
-                res.json({success: result});
+                res.json(result);
             })
             .fail(function(err) {
                 errorHandler(res, err);
@@ -32,9 +34,9 @@ app.post('/api/upload', upload.single("file"), function(req, res) {
     });
 });
 
-app.get('/api/getList', function(req, res) {
+app.post('/api/getList', jsonParser, function(req, res) {
     provider
-        .getList()
+        .getList(req.body)
         .then(function(data) {
             res.json(data);
         })

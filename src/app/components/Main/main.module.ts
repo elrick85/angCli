@@ -16,6 +16,7 @@ import {HttpModule} from "@angular/http";
 import {DashboardService} from "./components/Dashboard/dashboard.service";
 import {DataUploadComponent} from './components/data-upload/data-upload.component';
 import {FormsModule} from "@angular/forms";
+import { DataTablePaginationComponent } from './components/data-table-pagination/data-table-pagination.component';
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import {FormsModule} from "@angular/forms";
         DataTableComponent,
         DataTableItemComponent,
         DataTableHeaderComponent,
-        DataUploadComponent
+        DataUploadComponent,
+        DataTablePaginationComponent
     ],
     providers: [GuardService, AuthService, DashboardService]
 })

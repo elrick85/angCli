@@ -2,8 +2,11 @@
  * Created by Zaur_Ismailov on 10/19/2016.
  */
 
-import {Component, OnInit} from '@angular/core';
-import {WordModel, DataTableOptions, FieldModel} from "../../../../Models/WordModel";
+import {Component, OnInit, ElementRef} from '@angular/core';
+import {
+    WordModel, DataTableOptions, FieldModel, PaginationOptionsModel,
+    DataTableOptionsForRequest
+} from "../../../../Models/WordModel";
 import {DashboardService} from "./dashboard.service";
 
 @Component({
@@ -12,13 +15,11 @@ import {DashboardService} from "./dashboard.service";
     providers: [DashboardService]
 })
 export class DashboardComponent implements OnInit {
-    public hello: string;
+    submitted = false;
 
     public tableOptions: DataTableOptions<WordModel> = DataTableOptions.Create<WordModel>();
 
-    constructor(private dashboardSrv: DashboardService) {
-        this.hello = 'Hello World!';
-
+    constructor(private dashboardSrv: DashboardService, private el: ElementRef) {
         let source: WordModel[] = [];
 
         let fields: FieldModel[] = [
@@ -31,12 +32,30 @@ export class DashboardComponent implements OnInit {
 
         this.tableOptions.dataSource = source;
         this.tableOptions.fields = fields;
+        this.tableOptions.pagination = PaginationOptionsModel.Create({
+            offset: 0,
+            limit: 10
+        });
+    }
 
+    onSubmit() {
+        this.submitted = true;
+
+        let form = this.el.nativeElement.querySelector("[app-data-upload]");
+
+        this.dashboardSrv
+            .uploadFile(new FormData(form))
+            .then(d => this.submitted = true)
+            .catch(er => alert(er));
+
+        return false;
     }
 
     ngOnInit() {
+        let options = DataTableOptionsForRequest.Create(this.tableOptions.getOptionsForRequest());
+
         this.dashboardSrv
-            .getWords()
-            .then((data:WordModel[]) => {this.tableOptions.dataSource = data});
+            .getWords(options)
+            .then(opt => this.tableOptions.merge(opt));
     }
 }
