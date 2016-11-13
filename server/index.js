@@ -18,11 +18,12 @@ var errorHandler = function(res, err) {
     res.status(err.status || 500);
     res.json({ message: err.message || err.error });
 };
+
 try{
     fs.accessSync(provider.getDbPath(), fs.constants.F_OK)
 }
 catch(e){
-
+    provider.installDb();
 }
 
 app.get('/api', function(req, res, next) {
