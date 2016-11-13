@@ -4,8 +4,22 @@
 
 var loki = require("lokijs");
 var Q = require("q");
+var path = require("path");
 
 module.exports = {
+    getDbPath: function() {
+        return path.join(__dirname, 'db.json');
+    },
+
+    installDb: function() {
+        var db = new loki(this.getDbPath());
+        var children = db.addCollection('words', {
+            unique: ['word']
+        });
+
+        db.saveDatabase();
+    },
+
     getList: function(options) {
 
         var _options = {
@@ -14,11 +28,12 @@ module.exports = {
         };
 
         var defer = Q.defer();
-        var db = new loki('./server/db.json');
+        var dbPath = this.getDbPath();
+        var db = new loki(dbPath);
 
         db.loadDatabase({}, function(res) {
             var col = db.getCollection("words");
-            var resultset = col.chain().find().branch();
+            var resultset = col.chain().find({}).branch();
             var total = resultset.count();
 
             var data = resultset
@@ -41,7 +56,8 @@ module.exports = {
 
     add: function(data) {
         var defer = Q.defer();
-        var db = new loki('./server/db.json');
+        var dbPath = this.getDbPath();
+        var db = new loki(dbPath);
         var errors = [];
 
         db.loadDatabase({}, function(res) {

@@ -4,11 +4,12 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "start": "ng serve --proxy-config proxy.conf.json",
+    "start": "ng build && node ./server/devServer.js",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",
-    "e2e": "protractor"
+    "e2e": "protractor",
+    "serve": "ng serve --proxy-config proxy.conf.json"
   },
   "private": true,
   "dependencies": {

@@ -3,8 +3,9 @@
  */
 
 var loki = require("lokijs");
+var provider = require("./provider");
 
-var db = new loki('./server/db.json');
+var db = new loki(provider.getDbPath());
 var children = db.addCollection('words', {
     unique: ['word']
 });
