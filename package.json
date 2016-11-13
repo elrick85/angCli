@@ -8,13 +8,9 @@
     "server": "node ./server/devServer.js",
     "start": "npm run build && npm run server",
     "lint": "tslint \"src/**/*.ts\"",
-    "test": "ng test",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
     "serve": "ng serve --proxy-config proxy.conf.json",
-    "deploy": "firebase deploy",
-    "login": "firebase login",
-    "init": "firebase init"
   },
   "private": true,
   "dependencies": {
