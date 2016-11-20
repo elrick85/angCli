@@ -2,21 +2,18 @@
     <colgroup>
         <col style="width: 120px">
         <col>
-        <col>
-        <col>
-        <col>
+        <col style="width: 200px">
+        <col style="width: 520px">
+        <col style="width: 60px">
     </colgroup>
     <thead>
-    <tr>
-        <th app-data-table-header *ngFor="let field of options.fields" [col]="field"></th>
-    </tr>
+        <template [ngTemplateOutlet]="headerTemplate.templateRef" [ngOutletContext]="{ $implicit: options.fields }"></template>
     </thead>
     <tbody>
-    <tr app-data-table-item *ngFor="let item of options.dataSource" [item]="item"></tr>
+    <template [ngTemplateOutlet]="rowTemplate.templateRef" [ngOutletContext]="{ $implicit: options.dataSource }"></template>
+
     </tbody>
     <tfoot>
-    <tr>
-        <td colspan="5" app-data-table-pagination [options]="options.pagination"></td>
-    </tr>
+    <template [ngTemplateOutlet]="paginationTemplate.templateRef" [ngOutletContext]="{ $implicit: options.pagination }"></template>
     </tfoot>
 </table>

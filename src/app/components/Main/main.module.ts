@@ -9,14 +9,15 @@ import {routing} from './main.routes';
 import {GuardService} from "../../services/guard.service";
 import {AuthService} from "../../services/auth.service";
 import {DataTableComponent} from './components/data-table/data-table.component';
-import {DataTableItemComponent} from './components/data-table-item/data-table-item.component';
+import {DataTableItemComponent} from './components/data-table/components/data-table-item/data-table-item.component';
 import {BrowserModule} from "@angular/platform-browser";
-import {DataTableHeaderComponent} from './components/data-table-header/data-table-header.component';
+import {DataTableHeaderComponent} from './components/data-table/components/data-table-header/data-table-header.component';
 import {HttpModule} from "@angular/http";
 import {DashboardService} from "./components/Dashboard/dashboard.service";
 import {DataUploadComponent} from './components/data-upload/data-upload.component';
 import {FormsModule} from "@angular/forms";
-import { DataTablePaginationComponent } from './components/data-table-pagination/data-table-pagination.component';
+import { DataTablePaginationComponent } from './components/data-table/components/data-table-pagination/data-table-pagination.component';
+import {DataTableRowTemplateDirective} from "./components/data-table/DataTableRowTemplateDirective";
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import { DataTablePaginationComponent } from './components/data-table-pagination
         DataTableItemComponent,
         DataTableHeaderComponent,
         DataUploadComponent,
-        DataTablePaginationComponent
+        DataTablePaginationComponent,
+        DataTableRowTemplateDirective
     ],
     providers: [GuardService, AuthService, DashboardService]
 })

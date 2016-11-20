@@ -2,13 +2,14 @@
  * Created by zauri_000 on 07.11.2016.
  */
 
-import {Injectable} from "@angular/core";
+import {Injectable, ViewChild} from "@angular/core";
 import {Http, Headers} from "@angular/http";
 import {
     WordModel, DataTableOptionsForRequest, DataTableOptions,
     PaginationOptionsModel
 } from "../../../../Models/WordModel";
 import {Observable} from "rxjs";
+import {DataTableRowTemplateDirective} from "../data-table/DataTableRowTemplateDirective";
 
 @Injectable()
 export class DashboardService {

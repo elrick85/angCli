@@ -1,5 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {FieldModel} from "../../../../Models/WordModel";
+import {FieldModel} from "../../../../../../Models/WordModel";
+
 
 @Component({
     selector: '[app-data-table-header]',

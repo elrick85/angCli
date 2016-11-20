@@ -4,5 +4,70 @@
         <form app-data-upload #uploadForm="ngForm" (ngSubmit)="onSubmit()"></form>
     </div>
 
-    <app-data-table [options]="tableOptions"></app-data-table>
+    <app-data-table [options]="tableOptions"
+                    [headerTemplate]="gridHeader"
+                    [rowTemplate]="gridRow"
+                    [paginationTemplate]="gridPagination"></app-data-table>
+
+    <template #headerTmpl data-table-row-template let-item>
+        <tr>
+            <th app-data-table-header *ngFor="let field of item" [col]="field"></th>
+        </tr>
+    </template>
+
+    <template #listTmpl data-table-row-template let-item>
+        <tr app-data-table-item *ngFor="let data of item" [item]="data" [onClick]="onGridItemClick.bind(this)"></tr>
+    </template>
+
+    <template #paginationTmpl data-table-row-template let-item>
+        <tr>
+            <td colspan="5" app-data-table-pagination [options]="item"></td>
+        </tr>
+    </template>
+
+    <div id="modal1" class="modal modal-fixed-footer">
+        <template [ngTemplateOutlet]="modalTemplate" [ngOutletContext]="{ $implicit: getCurrentItem() }"></template>
+    </div>
+
+    <template #modalTmpl let-item>
+        <div class="modal-content">
+            <h4>Modal Header</h4>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input disabled placeholder="Translation" type="text" name="word"
+                                   [(ngModel)]="item.data.word">
+                            <label>Word</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input placeholder="Translation" type="text" name="trans" [(ngModel)]="item.data.trans">
+                            <label>Translation</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input placeholder="Transcription" type="text" name="transcription"
+                                   [(ngModel)]="item.data.transcription">
+                            <label>Transcription</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s3 input-field">
+                            <img *ngIf="!!item.data.picture && item.data.picture != 'http:'" src="{{item.data.picture}}"
+                                 width="200">
+                        </div>
+                        <div class="col s9 input-field">
+                            <textarea class="materialize-textarea" name="example" [(ngModel)]="item.data.example">
+                            </textarea>
+                            <label>Example</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="modal-action waves-effect waves-green btn-flat" (click)="item.onSave(item.data)">Save</a>
+            <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat" (click)="item.onCancel(item.data)">Cancel</a>
+        </div>
+    </template>
+
 </div>

@@ -2,11 +2,11 @@
     <div *ngIf="!!data.picture && data.picture != 'http:'"><img src="{{data.picture}}" width="100"></div>
 </td>
 <td>
-    <div>{{data.word}}</div>
+    <div><a href="#" (click)="_onClick($event, data)">{{data.word}}</a></div>
     <div>{{data.trans}}</div>
 </td>
 <td><span *ngIf="!!data.transcription">[{{data.transcription}}]</span></td>
-<td><span>{{data.example}}</span></td>
+<td><span [innerText]="data.example"></span></td>
 <td>
     <div *ngIf="data.audio">
         <audio src="{{data.audio}}"></audio>
