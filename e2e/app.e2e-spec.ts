@@ -1,10 +1,10 @@
-import { Ang2CLIPage } from './app.po';
+import { AngCliPage } from './app.po';
 
-describe('ang2-cli App', function() {
-  let page: Ang2CLIPage;
+describe('ang-cli App', function() {
+  let page: AngCliPage;
 
   beforeEach(() => {
-    page = new Ang2CLIPage();
+    page = new AngCliPage();
   });
 
   it('should display message saying app works', () => {

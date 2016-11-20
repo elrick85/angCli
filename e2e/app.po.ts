@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class Ang2CLIPage {
+export class AngCliPage {
   navigateTo() {
     return browser.get('/');
   }
