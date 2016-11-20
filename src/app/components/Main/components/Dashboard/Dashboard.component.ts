@@ -52,6 +52,8 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.dashboardSrv.testApi();
+
         let options = DataTableOptionsForRequest.Create(this.tableOptions.getOptionsForRequest());
 
         this.dashboardSrv
