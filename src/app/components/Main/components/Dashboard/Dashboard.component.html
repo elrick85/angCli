@@ -16,7 +16,7 @@
     </template>
 
     <template #listTmpl data-table-row-template let-item>
-        <tr app-data-table-item *ngFor="let data of item" [item]="data" [onClick]="onGridItemClick.bind(this)"></tr>
+        <tr app-dashboard-item *ngFor="let data of item" [item]="data" [clickHandler]="onGridItemClick.bind(this)"></tr>
     </template>
 
     <template #paginationTmpl data-table-row-template let-item>
@@ -35,16 +35,22 @@
             <div class="row">
                 <form class="col s12">
                     <div class="row">
-                        <div class="input-field col s4">
+                        <div class="input-field col s6">
                             <input disabled placeholder="Translation" type="text" name="word"
                                    [(ngModel)]="item.data.word">
                             <label>Word</label>
                         </div>
-                        <div class="input-field col s4">
+                        <div class="input-field col s6">
                             <input placeholder="Translation" type="text" name="trans" [(ngModel)]="item.data.trans">
                             <label>Translation</label>
                         </div>
-                        <div class="input-field col s4">
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input placeholder="Translation" type="text" name="meaning" [(ngModel)]="item.data.meaning">
+                            <label>Meaning</label>
+                        </div>
+                        <div class="input-field col s6">
                             <input placeholder="Transcription" type="text" name="transcription"
                                    [(ngModel)]="item.data.transcription">
                             <label>Transcription</label>
@@ -66,7 +72,8 @@
         </div>
         <div class="modal-footer">
             <a href="#" class="modal-action waves-effect waves-green btn-flat" (click)="item.onSave(item.data)">Save</a>
-            <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat" (click)="item.onCancel(item.data)">Cancel</a>
+            <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat"
+               (click)="item.onCancel(item.data)">Cancel</a>
         </div>
     </template>
 

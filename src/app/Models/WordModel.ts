@@ -3,6 +3,8 @@
  */
 
 export class WordModel {
+    _id: string;
+
     word: string;
 
     trans: string;
@@ -14,6 +16,8 @@ export class WordModel {
     example: string;
 
     audio: string;
+
+    meaning: string;
 }
 
 export interface IPaginationOptionsModel {

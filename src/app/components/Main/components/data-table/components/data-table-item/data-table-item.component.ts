@@ -7,7 +7,7 @@ import {WordModel} from "../../../../../../Models/WordModel";
     styleUrls: ['data-table-item.component.css']
 })
 export class DataTableItemComponent implements OnInit {
-    @Input("item") data: WordModel;
+    @Input("item") data: any;
 
     @Input("onClick") _onClick: Function;
 

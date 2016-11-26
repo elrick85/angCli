@@ -9,6 +9,7 @@ import {
 } from "../../../../Models/WordModel";
 import {DashboardService} from "./dashboard.service";
 import {DataTableRowTemplateDirective} from "../data-table/DataTableRowTemplateDirective";
+import {_catch} from "rxjs/operator/catch";
 
 @Component({
     selector: 'dashboard',
@@ -56,9 +57,23 @@ export class DashboardComponent implements OnInit {
         return this.currentItem;
     }
 
+    /**
+     *
+     * @param item
+     * @returns {boolean}
+     */
     onGridItemSave(item: WordModel) {
-        console.log("SAVE: ", item);
-        $("#modal1").modal("close");
+        this.dashboardSrv
+            .updateWord(item)
+            .then(() => {
+                this._read();
+                $("#modal1").modal("close");
+            })
+            .catch((er) => {
+                $("#modal1").modal("close");
+                alert(er);
+            });
+
         return false;
     }
 
@@ -74,13 +89,11 @@ export class DashboardComponent implements OnInit {
     }
 
     onSubmit() {
-        this.submitted = true;
-
         let form = this.el.nativeElement.querySelector("[app-data-upload]");
 
         this.dashboardSrv
             .uploadFile(new FormData(form))
-            .then(d => this.submitted = true)
+            .then(d => this._read())
             .catch(er => alert(er));
 
         return false;
@@ -88,11 +101,13 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit() {
         $("#modal1").modal();
-        this.dashboardSrv.testApi();
+        this._read();
+    }
 
+    private _read() {
         let options = DataTableOptionsForRequest.Create(this.tableOptions.getOptionsForRequest());
 
-        this.dashboardSrv
+        return this.dashboardSrv
             .getWords(options)
             .then(opt => this.tableOptions.merge(opt));
     }

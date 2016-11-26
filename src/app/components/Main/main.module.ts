@@ -18,6 +18,7 @@ import {DataUploadComponent} from './components/data-upload/data-upload.componen
 import {FormsModule} from "@angular/forms";
 import { DataTablePaginationComponent } from './components/data-table/components/data-table-pagination/data-table-pagination.component';
 import {DataTableRowTemplateDirective} from "./components/data-table/DataTableRowTemplateDirective";
+import { DashboardItemComponent } from './components/dashboard-item/dashboard-item.component';
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import {DataTableRowTemplateDirective} from "./components/data-table/DataTableRo
         DataTableHeaderComponent,
         DataUploadComponent,
         DataTablePaginationComponent,
-        DataTableRowTemplateDirective
+        DataTableRowTemplateDirective,
+        DashboardItemComponent
     ],
     providers: [GuardService, AuthService, DashboardService]
 })

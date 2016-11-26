@@ -16,6 +16,7 @@ export class DashboardService {
 
     wordsUrl = "/api/getList";
     uploadUrl = "/api/upload";
+    updateUrl = "/api/update";
 
     constructor(private http: Http) {
     }
@@ -32,6 +33,12 @@ export class DashboardService {
 
                 return tbl;
             })
+            .catch(this.handleError);
+    }
+
+    updateWord(data:WordModel){
+        return this.http.post(this.updateUrl, data)
+            .toPromise()
             .catch(this.handleError);
     }
 
