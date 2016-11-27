@@ -36,6 +36,21 @@ export class DashboardService {
             .catch(this.handleError);
     }
 
+    getMeanings(options: DataTableOptionsForRequest): Promise<DataTableOptions<WordModel>> {
+        return this.http.post(this.wordsUrl, options.buildQuery())
+            .toPromise()
+            .then((responce) => {
+                let _res = responce.json();
+
+                var tbl = DataTableOptions.Create<WordModel>();
+                tbl.dataSource = _res.data as WordModel[];
+                tbl.pagination = _res.pagination as PaginationOptionsModel;
+
+                return tbl;
+            })
+            .catch(this.handleError);
+    }
+
     updateWord(data:WordModel){
         return this.http.post(this.updateUrl, data)
             .toPromise()

@@ -1,10 +1,6 @@
 <table class="striped">
     <colgroup>
-        <col style="width: 120px">
-        <col>
-        <col style="width: 200px">
-        <col style="width: 520px">
-        <col style="width: 60px">
+        <col *ngFor="let item of options.fields" [ngStyle]="{'width': item.width + 'px'}">
     </colgroup>
     <thead>
         <template [ngTemplateOutlet]="headerTemplate.templateRef" [ngOutletContext]="{ $implicit: options.fields }"></template>

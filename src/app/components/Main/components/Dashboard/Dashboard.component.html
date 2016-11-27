@@ -35,38 +35,48 @@
             <div class="row">
                 <form class="col s12">
                     <div class="row">
-                        <div class="input-field col s6">
-                            <input disabled placeholder="Translation" type="text" name="word"
-                                   [(ngModel)]="item.data.word">
-                            <label>Word</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input placeholder="Translation" type="text" name="trans" [(ngModel)]="item.data.trans">
-                            <label>Translation</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <input placeholder="Translation" type="text" name="meaning" [(ngModel)]="item.data.meaning">
-                            <label>Meaning</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input placeholder="Transcription" type="text" name="transcription"
-                                   [(ngModel)]="item.data.transcription">
-                            <label>Transcription</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s3 input-field">
-                            <img *ngIf="!!item.data.picture && item.data.picture != 'http:'" src="{{item.data.picture}}"
+                        <div class="col s3">
+                            <img *ngIf="!!item.data.meanings[0].picture && item.data.meanings[0].picture != 'http:'"
+                                 src="{{item.data.meanings[0].picture}}"
                                  width="200">
                         </div>
-                        <div class="col s9 input-field">
-                            <textarea class="materialize-textarea" name="example" [(ngModel)]="item.data.example">
-                            </textarea>
-                            <label>Example</label>
+                        <div class="col s9">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input disabled placeholder="Translation" type="text" name="word"
+                                           [(ngModel)]="item.data.word">
+                                    <label>Word</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input placeholder="Transcription" type="text" name="transcription"
+                                           [(ngModel)]="item.data.transcription">
+                                    <label>Transcription</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="row">
+                            <div class="col s2"><b>Picture</b></div>
+                            <div class="col s2"><b>Translation/Date</b></div>
+                            <div class="col s8"><b>Example</b></div>
+                        </div>
+                        <div class="row" *ngFor="let data of item.data.meanings">
+                            <div class="col s2">
+                                <img *ngIf="!!data.picture && data.picture != 'http:'"
+                                     src="{{data.picture}}"
+                                     width="100">
+                            </div>
+                            <div class="col s2">
+                                <div>{{data.trans}}</div>
+                                <div>{{data.date}}</div>
+                            </div>
+                            <div class="col s8">
+                                <span [innerHtml]="data.example"></span>
+                            </div>
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>

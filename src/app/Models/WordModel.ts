@@ -7,17 +7,34 @@ export class WordModel {
 
     word: string;
 
+    transcription: string;
+
+    audio: string;
+
+    meanings: [MeaningModel];
+
+    date: Date;
+
+    createMeaningsDataSource(){
+    }
+
+    static Create() {
+        let item = new WordModel();
+        item.meanings = [new MeaningModel()];
+
+        return item;
+    }
+}
+export class MeaningModel {
+    _id: string;
+
     trans: string;
 
     picture: string;
 
-    transcription: string;
-
     example: string;
 
-    audio: string;
-
-    meaning: string;
+    date: Date;
 }
 
 export interface IPaginationOptionsModel {
@@ -94,6 +111,8 @@ export class DataTableOptions<T> extends DataTableOptionsForRequest implements I
 
     dataSource: T[];
 
+    filter?: FilterModel[];
+
     fields: FieldModel[];
 
     getOptionsForRequest(): IDataTableOptionsForRequest {
@@ -118,4 +137,12 @@ export class FieldModel {
     name: string;
 
     title: string;
+}
+
+export class FilterModel {
+    name: string;
+
+    condition?: string;
+
+    value: string;
 }

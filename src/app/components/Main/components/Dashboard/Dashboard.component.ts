@@ -5,7 +5,7 @@
 import {Component, OnInit, ElementRef, ViewChild, ViewContainerRef, TemplateRef} from '@angular/core';
 import {
     WordModel, DataTableOptions, FieldModel, PaginationOptionsModel,
-    DataTableOptionsForRequest
+    DataTableOptionsForRequest, MeaningModel, FilterModel
 } from "../../../../Models/WordModel";
 import {DashboardService} from "./dashboard.service";
 import {DataTableRowTemplateDirective} from "../data-table/DataTableRowTemplateDirective";
@@ -28,18 +28,18 @@ export class DashboardComponent implements OnInit {
     @ViewChild("modalTmpl", {read: TemplateRef}) modalTemplate;
 
     private currentItem: {data: WordModel, onSave?: Function, onCancel?: Function} = {
-        data: new WordModel()
+        data: WordModel.Create()
     };
 
     constructor(private dashboardSrv: DashboardService, private el: ElementRef) {
         let source: WordModel[] = [];
 
         let fields: FieldModel[] = [
-            {name: "picture", title: "Picture"},
-            {name: "word", title: "Word/Translation"},
-            {name: "transcription", title: "Transcription"},
-            {name: "example", title: "Example"},
-            {name: "audio", title: "Audio"}
+            {name: "picture", title: "Picture", width: 120},
+            {name: "word", title: "Word"},
+            {name: "meanings", title: "Meanings count", width: 120},
+            {name: "audio", title: "Audio", width: 120},
+            {name: "date", title: "Date", width: 200}
         ];
 
         this.tableOptions.dataSource = source;
@@ -51,6 +51,8 @@ export class DashboardComponent implements OnInit {
 
         this.currentItem.onSave = this.onGridItemSave.bind(this);
         this.currentItem.onCancel = this.onGridItemCancel.bind(this);
+
+        this._read();
     }
 
     getCurrentItem(): {data: WordModel} {
@@ -101,7 +103,6 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit() {
         $("#modal1").modal();
-        this._read();
     }
 
     private _read() {
