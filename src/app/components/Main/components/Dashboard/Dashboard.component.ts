@@ -55,6 +55,11 @@ export class DashboardComponent implements OnInit {
         this._read();
     }
 
+    onPaginationChange($event){
+        this.tableOptions.pagination = $event;
+        this._read();
+    }
+
     getCurrentItem(): {data: WordModel} {
         return this.currentItem;
     }
@@ -80,7 +85,7 @@ export class DashboardComponent implements OnInit {
     }
 
     onGridItemCancel() {
-        this.currentItem.data = new WordModel();
+        this.currentItem.data = WordModel.Create();
         return false;
     }
 

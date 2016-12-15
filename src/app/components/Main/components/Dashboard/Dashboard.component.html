@@ -21,7 +21,7 @@
 
     <template #paginationTmpl data-table-row-template let-item>
         <tr>
-            <td colspan="5" app-data-table-pagination [options]="item"></td>
+            <td colspan="5" app-data-table-pagination [options]="item" (onPaginationChange)="onPaginationChange($event)"></td>
         </tr>
     </template>
 
@@ -81,8 +81,11 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#" class="modal-action waves-effect waves-green btn-flat" (click)="item.onSave(item.data)">Save</a>
-            <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat"
+            <a href="#"
+               class="modal-action waves-effect waves-green btn-flat"
+               (click)="item.onSave(item.data)">Save</a>
+            <a href="#"
+               class="modal-action modal-close waves-effect waves-green btn-flat"
                (click)="item.onCancel(item.data)">Cancel</a>
         </div>
     </template>

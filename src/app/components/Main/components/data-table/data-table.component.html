@@ -3,6 +3,9 @@
         <col *ngFor="let item of options.fields" [ngStyle]="{'width': item.width + 'px'}">
     </colgroup>
     <thead>
+    <template [ngTemplateOutlet]="paginationTemplate.templateRef" [ngOutletContext]="{ $implicit: options.pagination }"></template>
+    </thead>
+    <thead>
         <template [ngTemplateOutlet]="headerTemplate.templateRef" [ngOutletContext]="{ $implicit: options.fields }"></template>
     </thead>
     <tbody>

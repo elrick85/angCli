@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, TemplateRef, ViewChild, ViewContainerRef, EmbeddedViewRef} from '@angular/core';
-import {IDataTableOptions} from "../../../../Models/WordModel";
+import {IDataTableOptions, DataTableOptions} from "../../../../Models/WordModel";
 import {Observable} from "rxjs";
 import {DataTableRowTemplateDirective} from "./DataTableRowTemplateDirective";
 
@@ -10,7 +10,7 @@ import {DataTableRowTemplateDirective} from "./DataTableRowTemplateDirective";
 })
 export class DataTableComponent implements OnInit {
 
-    @Input() options: IDataTableOptions;
+    @Input() options: DataTableOptions<any>;
     @Input() headerTemplate: DataTableRowTemplateDirective;
     @Input() rowTemplate: DataTableRowTemplateDirective;
     @Input() paginationTemplate: DataTableRowTemplateDirective;

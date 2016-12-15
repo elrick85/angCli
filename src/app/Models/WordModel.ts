@@ -38,12 +38,15 @@ export class MeaningModel {
 }
 
 export interface IPaginationOptionsModel {
-    offset: number;
+    offset?: number;
 
-    limit: number;
+    limit?: number;
+
+    total?: number;
 }
 
 export class PaginationOptionsModel implements IPaginationOptionsModel {
+
     total: number;
 
     offset: number;
@@ -56,11 +59,19 @@ export class PaginationOptionsModel implements IPaginationOptionsModel {
         return page + 1;
     }
 
+    setPage(pageNum: number): void {
+        this.offset = this.limit*(pageNum - 1);
+    }
+
+    getPageCount(): number {
+        return Math.ceil(this.total / this.limit);
+    }
+
     static Create(opt: IPaginationOptionsModel) {
         let pModel = new PaginationOptionsModel();
-        pModel.total = 0;
-        pModel.offset = opt.offset;
-        pModel.limit = opt.limit;
+        pModel.total = opt.total || 0;
+        pModel.offset = opt.offset || 0;
+        pModel.limit = opt.limit || 10;
 
         return pModel;
     }
@@ -137,6 +148,8 @@ export class FieldModel {
     name: string;
 
     title: string;
+
+    width?: number;
 }
 
 export class FilterModel {

@@ -11,7 +11,6 @@ import {NgForm} from "@angular/forms";
 export class DataUploadComponent implements OnInit {
 
     constructor(private dashboardSrv: DashboardService) {
-        console.log("ok");
     }
 
     ngOnInit() {
