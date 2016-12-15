@@ -8,30 +8,44 @@ import {
     WordModel, DataTableOptionsForRequest, DataTableOptions,
     PaginationOptionsModel
 } from "../../../../Models/WordModel";
-import {Observable} from "rxjs";
-import {DataTableRowTemplateDirective} from "../data-table/DataTableRowTemplateDirective";
+import {Observable, BehaviorSubject} from "rxjs";
+import {GridDataResult} from "@progress/kendo-angular-grid";
+import {toODataString} from "@progress/kendo-data-query";
 
 @Injectable()
-export class DashboardService {
+export class DashboardService extends BehaviorSubject<GridDataResult> {
 
-    wordsUrl = "/api/getList";
-    uploadUrl = "/api/upload";
-    updateUrl = "/api/update";
+    private wordsUrl = "/api/getList";
+    private uploadUrl = "/api/upload";
+    private updateUrl = "/api/update";
+
+    private BASE_URL: string = 'http://services.odata.org/V4/Northwind/Northwind.svc/';
+    private tableName: string = "Categories";
 
     constructor(private http: Http) {
+        super(null);
+    }
+
+    public query(state) {
+        this.fetch(this.tableName, state)
+            .subscribe(x => super.next(x));
+    }
+
+    private fetch(tableName: string, state: any): Observable<GridDataResult> {
+        return this.http
+            .post(`${this.wordsUrl}`, state)
+            .map(response => response.json())
+            .map(response => (<GridDataResult>{
+                data: response.data,
+                total: parseInt(response.pagination.total, 10)
+            }));
     }
 
     getWords(options: DataTableOptionsForRequest): Promise<DataTableOptions<WordModel>> {
         return this.http.post(this.wordsUrl, options.buildQuery())
             .toPromise()
             .then((responce) => {
-                let _res = responce.json();
 
-                var tbl = DataTableOptions.Create<WordModel>();
-                tbl.dataSource = _res.data as WordModel[];
-                tbl.pagination = _res.pagination as PaginationOptionsModel;
-
-                return tbl;
             })
             .catch(this.handleError);
     }
@@ -65,10 +79,6 @@ export class DashboardService {
             .toPromise()
             .then(data => true)
             .catch(this.handleError);
-    }
-
-    testApi(){
-        return this.http.get("/api").toPromise();
     }
 
     private handleError(error: any): Promise<any> {

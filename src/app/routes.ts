@@ -11,5 +11,3 @@ export const routes: Routes = [
     pathMatch: 'full'
   }
 ];
-
-export const routing = RouterModule.forRoot(routes);

@@ -5,18 +5,20 @@ import {RootComponent} from './components/Root/root.component';
 import {LoginModule} from './components/Profile/profile.module';
 import {MainModule} from './components/Main/main.module';
 
-import {routing} from './routes';
+import {routes} from './routes';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    LoginModule,
-    MainModule,
-    routing
-  ],
-  declarations: [
-    RootComponent
-  ],
-  bootstrap: [RootComponent]
+    imports: [
+        BrowserModule,
+        LoginModule,
+        MainModule,
+        RouterModule.forRoot(routes)
+    ],
+    declarations: [
+        RootComponent
+    ],
+    bootstrap: [RootComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

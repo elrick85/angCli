@@ -6,23 +6,24 @@ import {NgModule} from '@angular/core';
 import {BrowserModule}  from '@angular/platform-browser';
 import {LoginComponent} from "./components/Login/Login.component";
 import {LoginFrameComponent} from "./components/LoginFrame/LoginFrame.component";
-import {routing} from './profile.routes';
+import {routes} from './profile.routes';
 import {GuardService} from "../../services/guard.service";
 import {AuthService} from "../../services/auth.service";
 import {FormsModule}  from '@angular/forms';
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
-  imports: [
-    routing,
-    FormsModule,
-    BrowserModule
-  ],
-  declarations: [
-    LoginFrameComponent,
-    LoginComponent,
-  ],
-  providers: [GuardService, AuthService]
+    imports: [
+        RouterModule.forChild(routes),
+        FormsModule,
+        BrowserModule
+    ],
+    declarations: [
+        LoginFrameComponent,
+        LoginComponent,
+    ],
+    providers: [GuardService, AuthService]
 })
 export class LoginModule {
 }

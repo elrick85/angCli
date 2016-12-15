@@ -4,90 +4,18 @@
         <form app-data-upload #uploadForm="ngForm" (ngSubmit)="onSubmit()"></form>
     </div>
 
-    <app-data-table [options]="tableOptions"
-                    [headerTemplate]="gridHeader"
-                    [rowTemplate]="gridRow"
-                    [paginationTemplate]="gridPagination"></app-data-table>
-
-    <template #headerTmpl data-table-row-template let-item>
-        <tr>
-            <th app-data-table-header *ngFor="let field of item" [col]="field"></th>
-        </tr>
-    </template>
-
-    <template #listTmpl data-table-row-template let-item>
-        <tr app-dashboard-item *ngFor="let data of item" [item]="data" [clickHandler]="onGridItemClick.bind(this)"></tr>
-    </template>
-
-    <template #paginationTmpl data-table-row-template let-item>
-        <tr>
-            <td colspan="5" app-data-table-pagination [options]="item" (onPaginationChange)="onPaginationChange($event)"></td>
-        </tr>
-    </template>
-
-    <div id="modal1" class="modal modal-fixed-footer">
-        <template [ngTemplateOutlet]="modalTemplate" [ngOutletContext]="{ $implicit: getCurrentItem() }"></template>
-    </div>
-
-    <template #modalTmpl let-item>
-        <div class="modal-content">
-            <h4>Modal Header</h4>
-            <div class="row">
-                <form class="col s12">
-                    <div class="row">
-                        <div class="col s3">
-                            <img *ngIf="!!item.data.meanings[0].picture && item.data.meanings[0].picture != 'http:'"
-                                 src="{{item.data.meanings[0].picture}}"
-                                 width="200">
-                        </div>
-                        <div class="col s9">
-                            <div class="row">
-                                <div class="input-field col s6">
-                                    <input disabled placeholder="Translation" type="text" name="word"
-                                           [(ngModel)]="item.data.word">
-                                    <label>Word</label>
-                                </div>
-                                <div class="input-field col s6">
-                                    <input placeholder="Transcription" type="text" name="transcription"
-                                           [(ngModel)]="item.data.transcription">
-                                    <label>Transcription</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="row">
-                            <div class="col s2"><b>Picture</b></div>
-                            <div class="col s2"><b>Translation/Date</b></div>
-                            <div class="col s8"><b>Example</b></div>
-                        </div>
-                        <div class="row" *ngFor="let data of item.data.meanings">
-                            <div class="col s2">
-                                <img *ngIf="!!data.picture && data.picture != 'http:'"
-                                     src="{{data.picture}}"
-                                     width="100">
-                            </div>
-                            <div class="col s2">
-                                <div>{{data.trans}}</div>
-                                <div>{{data.date}}</div>
-                            </div>
-                            <div class="col s8">
-                                <span [innerHtml]="data.example"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <a href="#"
-               class="modal-action waves-effect waves-green btn-flat"
-               (click)="item.onSave(item.data)">Save</a>
-            <a href="#"
-               class="modal-action modal-close waves-effect waves-green btn-flat"
-               (click)="item.onCancel(item.data)">Cancel</a>
-        </div>
-    </template>
+    <kendo-grid
+            [data]="view | async"
+            [pageSize]="pageSize"
+            [sortable]="{}"
+            [sort]="sort"
+            (sortChange)="sortChange($event)"
+            [skip]="skip"
+            [pageable]="true">
+        <kendo-grid-column field="word" width="100"></kendo-grid-column>
+        <kendo-grid-column field="transcription" width="200"></kendo-grid-column>
+        <kendo-grid-column field="date" [sortable]="false">
+        </kendo-grid-column>
+    </kendo-grid>
 
 </div>
