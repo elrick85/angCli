@@ -4,10 +4,10 @@
 
 import {Component}   from '@angular/core';
 import {Router}      from '@angular/router';
-import {AuthService} from '../../../../services/auth.service';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
-  template: require('./Login.component.html')
+  template: require('./login.component.html')
 })
 export class LoginComponent {
   message: string;

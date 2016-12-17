@@ -1,0 +1,30 @@
+<h1>Main page</h1>
+<div class="center-align">
+    <form app-data-upload #uploadForm="ngForm" (ngSubmit)="onSubmit()"></form>
+</div>
+
+<kendo-grid
+        [height]="400"
+        [data]="view | async"
+        [pageSize]="pageSize"
+        [sortable]="{}"
+        [sort]="sort"
+        (sortChange)="sortChange($event)"
+        [skip]="skip"
+        [pageable]="true">
+    <kendo-grid-column title="Word" width="200">
+        <template kendoCellTemplate let-dataItem>
+            <a href="#!" (click)="onEdit(dataItem)">{{dataItem.word}}</a>
+        </template>
+    </kendo-grid-column>
+    <kendo-grid-column title="Transcription" field="transcription" width="200"></kendo-grid-column>
+    <kendo-grid-column title="Meanings" field="meaningsCount"></kendo-grid-column>
+    <kendo-grid-column field="date" [sortable]="false"></kendo-grid-column>
+    <kendo-grid-column>
+        <template kendoCellTemplate let-dataItem>
+            <button (click)="onRemove(dataItem)" class="k-button k-button-icontext k-grid-edit">Remove</button>
+        </template>
+    </kendo-grid-column>
+</kendo-grid>
+
+<dashboard-detail></dashboard-detail>

@@ -1,0 +1,50 @@
+<kendo-dialog *ngIf="opened" (close)="close()">
+    <kendo-dialog-titlebar>
+        <div class="row">
+            <div class="col s11">
+                <span>Word description</span>
+            </div>
+            <div class="col s1">
+                <audio src="{{data.audio}}"></audio>
+            </div>
+        </div>
+    </kendo-dialog-titlebar>
+
+    <form>
+        <div class="row">
+            <div class="col s12 right-align">
+                <small><i>{{data.date | date}}</i></small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input ([ngModel])="data.word" id="word-title" name="word" type="text" value="{{data.word}}" disabled>
+                <label for="word-title" class="active">Word</label>
+            </div>
+            <div class="input-field col s6">
+                <input [(ngModel)]="data.transcription" id="word-transcription" name="transcription" type="text" disabled>
+                <label for="word-transcription" class="active">Transcription</label>
+            </div>
+        </div>
+        <h5>Meanings</h5>
+        <div class="row" *ngFor="let item of data.meanings">
+            <div class="input-field col s3">
+                <input ([ngModel])="item.trans" type="text">
+                <label for="word-title" class="active">translation</label>
+            </div>
+            <div class="input-field col s3">
+                <input ([ngModel])="item.meaning" type="text">
+                <label class="active">meaning</label>
+            </div>
+            <div class="input-field col s3">
+                <input ([ngModel])="item.example" type="text">
+                <label class="active">example</label>
+            </div>
+            <div class="input-field col s3">
+                <input type="text" value="{{item.date | date}}" disabled>
+                <label class="active">date</label>
+            </div>
+        </div>
+    </form>
+
+</kendo-dialog>

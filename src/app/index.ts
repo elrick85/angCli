@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {RootComponent} from './components/Root/root.component';
+import {RootComponent} from './root.component';
 
-import {LoginModule} from './components/Profile/profile.module';
-import {MainModule} from './components/Main/main.module';
+import {LoginModule} from './pages/publicArea/profile.module';
+import {MainModule} from './pages/privateArea/main.module';
 
 import {routes} from './routes';
 import {RouterModule} from "@angular/router";

@@ -2,9 +2,9 @@
  * Created by Zaur_Ismailov on 10/19/2016.
  */
 
-import {Routes, RouterModule, Route} from "@angular/router";
-import {MainFrameComponent} from './components/MainFrame/MainFrame.component';
-import {DashboardComponent} from './components/Dashboard/Dashboard.component';
+import {Route} from "@angular/router";
+import {MainFrameComponent} from './shared/mainFrame/mainFrame.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 import {GuardService} from '../../services/guard.service';
 
 export const routes: Route[] = [

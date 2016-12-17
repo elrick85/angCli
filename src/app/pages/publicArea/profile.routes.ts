@@ -2,9 +2,9 @@
  * Created by Zaur_Ismailov on 10/19/2016.
  */
 
-import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from "./components/Login/Login.component";
-import {LoginFrameComponent} from "./components/LoginFrame/LoginFrame.component";
+import {Routes} from '@angular/router';
+import {LoginComponent} from "./login/login.component";
+import {LoginFrameComponent} from "./shared/loginFrame/loginFrame.component";
 
 export const routes: Routes = [
   {

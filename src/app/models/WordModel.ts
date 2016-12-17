@@ -15,6 +15,8 @@ export class WordModel {
 
     date: Date;
 
+    meaningsCount: number;
+
     createMeaningsDataSource(){
     }
 
@@ -29,6 +31,8 @@ export class MeaningModel {
     _id: string;
 
     trans: string;
+
+    meaning: string;
 
     picture: string;
 

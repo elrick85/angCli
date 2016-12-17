@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {DashboardService} from "../Dashboard/dashboard.service";
+import {DashboardService} from "../dashboard.service";
 import {NgForm} from "@angular/forms";
 
 @Component({
