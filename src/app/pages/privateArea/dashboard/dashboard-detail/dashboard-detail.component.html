@@ -10,7 +10,7 @@
         </div>
     </kendo-dialog-titlebar>
 
-    <form>
+    <form [formGroup]="form" (ngSubmit)="onSave(form)">
         <div class="row">
             <div class="col s12 right-align">
                 <small><i>{{data.date | date}}</i></small>
@@ -18,32 +18,42 @@
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <input ([ngModel])="data.word" id="word-title" name="word" type="text" value="{{data.word}}" disabled>
+                <input formControlName="word" id="word-title" type="text" disabled>
                 <label for="word-title" class="active">Word</label>
             </div>
             <div class="input-field col s6">
-                <input [(ngModel)]="data.transcription" id="word-transcription" name="transcription" type="text" disabled>
+                <input formControlName="transcription" id="word-transcription" name="transcription" type="text" disabled>
                 <label for="word-transcription" class="active">Transcription</label>
             </div>
         </div>
         <h5>Meanings</h5>
-        <div class="row" *ngFor="let item of data.meanings">
-            <div class="input-field col s3">
-                <input ([ngModel])="item.trans" type="text">
-                <label for="word-title" class="active">translation</label>
+        <div formArrayName="meanings">
+            <div class="row" *ngFor="let item of form.controls.meanings.controls; let i = index" [formGroupName]="i">
+                <div class="input-field col s3">
+                    <input formControlName="trans" type="text" id="word-trans-{{i}}">
+                    <label for="word-trans-{{i}}" class="active">translation</label>
+                </div>
+                <div class="input-field col s3">
+                    <input formControlName="meaning" type="text" id="word-meaning-{{i}}">
+                    <label for="word-meaning-{{i}}" class="active">meaning</label>
+                </div>
+                <div class="input-field col s3">
+                    <input formControlName="example" type="text" id="word-example-{{i}}">
+                    <label for="word-example-{{i}}" class="active">example</label>
+                </div>
+                <div class="input-field col s3">
+                    <input type="text" value="{{data.meanings[i].date | date}}" disabled id="word-date-{{i}}">
+                    <label for="word-date-{{i}}" class="active">date</label>
+                </div>
             </div>
-            <div class="input-field col s3">
-                <input ([ngModel])="item.meaning" type="text">
-                <label class="active">meaning</label>
-            </div>
-            <div class="input-field col s3">
-                <input ([ngModel])="item.example" type="text">
-                <label class="active">example</label>
-            </div>
-            <div class="input-field col s3">
-                <input type="text" value="{{item.date | date}}" disabled>
-                <label class="active">date</label>
-            </div>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn waves-effect waves-light">
+                save
+            </button>
+            <button class="btn waves-effect waves-light" (click)="onCancel()">
+                cancel
+            </button>
         </div>
     </form>
 

@@ -2,7 +2,7 @@
  * Created by zauri_000 on 17.12.2016.
  */
 
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
@@ -20,7 +20,8 @@ import {DashboardDetailComponent} from './dashboard-detail/dashboard-detail.comp
         GridModule,
         DialogModule,
         HttpModule,
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule
     ],
     declarations: [
         DashboardComponent,
