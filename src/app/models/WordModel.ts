@@ -39,6 +39,16 @@ export class MeaningModel {
     example: string;
 
     date: Date;
+
+    static CreateEmpty(){
+        return {
+            trans: "",
+            meaning: "",
+            picture: "",
+            example: "",
+            date: new Date()
+        } as MeaningModel;
+    }
 }
 
 export interface IPaginationOptionsModel {

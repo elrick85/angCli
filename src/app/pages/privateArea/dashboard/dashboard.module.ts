@@ -12,7 +12,8 @@ import {DialogModule} from '@progress/kendo-angular-dialog';
 import {DashboardComponent} from './dashboard.component';
 import {DashboardService} from "./dashboard.service";
 import {DataUploadComponent} from './data-upload/data-upload.component';
-import {DashboardDetailComponent} from './dashboard-detail/dashboard-detail.component';
+import {DetailPageComponent} from './detail-page/detail-page.component';
+import {ComponentsModule} from "../../../components/components.module";
 
 @NgModule({
     imports: [
@@ -21,12 +22,13 @@ import {DashboardDetailComponent} from './dashboard-detail/dashboard-detail.comp
         DialogModule,
         HttpModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ComponentsModule
     ],
     declarations: [
         DashboardComponent,
         DataUploadComponent,
-        DashboardDetailComponent
+        DetailPageComponent
     ],
     providers: [DashboardService]
 })

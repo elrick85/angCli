@@ -17,9 +17,13 @@ export class DashboardService extends BehaviorSubject<GridDataResult> {
     private wordsUrl = "/api/getList";
     private uploadUrl = "/api/upload";
     private updateUrl = "/api/update";
+    private getOneUrl = "/api/word";
+    private removeOneUrl = "/api/delete";
 
     private BASE_URL: string = 'http://services.odata.org/V4/Northwind/Northwind.svc/';
     private tableName: string = "Categories";
+
+    static selectedWord: WordModel;
 
     constructor(private http: Http) {
         super(null);
@@ -40,7 +44,25 @@ export class DashboardService extends BehaviorSubject<GridDataResult> {
             }));
     }
 
-    updateWord(data:WordModel){
+    getWord(id: string): Promise<WordModel> {
+        return this.http
+            .post(this.getOneUrl, {_id: id})
+            .map(response => {
+                return response.json();
+            })
+            .toPromise();
+    }
+
+    removeWord(id: string): Promise<WordModel> {
+        return this.http
+            .post(this.removeOneUrl, {_id: id})
+            .map(response => {
+                return response.json();
+            })
+            .toPromise();
+    }
+
+    updateWord(data: WordModel) {
         return this.http.post(this.updateUrl, data)
             .toPromise()
             .catch(this.handleError);
@@ -54,6 +76,10 @@ export class DashboardService extends BehaviorSubject<GridDataResult> {
             .toPromise()
             .then(data => true)
             .catch(this.handleError);
+    }
+
+    rememberSelectedWord(data: WordModel) {
+        DashboardService.selectedWord = data;
     }
 
     private handleError(error: any): Promise<any> {

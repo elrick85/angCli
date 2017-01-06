@@ -1,0 +1,16 @@
+<div class="row valign-wrapper">
+    <h1 class="left valign">{{data.word}}</h1>
+
+    <button class="btn-large waves-effect waves-light valign right"
+            (click)="onRemove()">
+        <i class="material-icons left">delete</i>Remove
+    </button>
+</div>
+
+
+<div class="row">
+    <i>[{{data.transcription}}]</i>
+    <audio src="{{data.audio}}"></audio>
+</div>
+
+<dashboard-detail></dashboard-detail>

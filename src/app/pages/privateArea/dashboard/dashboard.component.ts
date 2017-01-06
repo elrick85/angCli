@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 import {GridComponent, GridDataResult, DataStateChangeEvent} from "@progress/kendo-angular-grid";
 import {SortDescriptor} from "@progress/kendo-data-query";
 import {WordModel} from "../../../models/WordModel";
-import {DashboardDetailComponent} from "./dashboard-detail/dashboard-detail.component";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'dashboard',
@@ -18,72 +18,50 @@ import {DashboardDetailComponent} from "./dashboard-detail/dashboard-detail.comp
 export class DashboardComponent implements OnInit {
     private view: Observable<GridDataResult>;
     private pageSize: number = 20;
-    private skip: number  = 0;
+    private skip: number = 0;
 
     @ViewChild(GridComponent) private grid: GridComponent;
-    @ViewChild(DashboardDetailComponent) private detail: DashboardDetailComponent;
 
     private sort;
-    private selectedItem: WordModel = WordModel.Create();
-    private openedItemDetail: boolean = false;
 
-    constructor(private dashboardSrv: DashboardService, private el: ElementRef) {
+    constructor(private dashboardSrv: DashboardService, private el: ElementRef, private router: Router) {
         this.view = dashboardSrv;
 
-        this.dashboardSrv.query({ skip: this.skip, take: this.pageSize, sort: this.sort });
+        this.dashboardSrv.query({skip: this.skip, take: this.pageSize, sort: this.sort});
     }
 
     public ngAfterViewInit(): void {
-
-        this.detail.closeDialog
-            .subscribe(this.onCloseDialog.bind(this));
-
         this.grid.dataStateChange
             .do(this.afterDataStateChange.bind(this))
-            .subscribe(x => this.dashboardSrv.query(x));
+            .subscribe((x) => {
+                return this.dashboardSrv.query(x);
+            });
     }
 
     public sortChange(sort: SortDescriptor[]): void {
         this.sort = sort;
     }
 
-    private afterDataStateChange({ skip, take }: DataStateChangeEvent) {
+    private afterDataStateChange({skip, take, sort}: DataStateChangeEvent) {
         this.skip = skip;
         this.pageSize = take;
+        this.sort = sort;
     }
 
-    /**
-     *
-     * @param item
-     * @returns {boolean}
-     */
-    onGridItemSave(item: any) {
-        this.dashboardSrv
-            .updateWord(item)
-            .then(() => {
-                this.dashboardSrv.query({ skip: this.skip, take: this.pageSize })
-            })
-            .catch((er) => {
-                alert(er);
-            });
+    onEdit(data: WordModel) {
+        this.router.navigate(['/dashboard', data._id]);
 
         return false;
     }
 
-    onEdit(data: WordModel){
-        this.selectedItem = data;
-        this.detail.openDialog(data);
-
-        return false;
-    }
-
-    onRemove(data: WordModel){
+    onRemove(data: WordModel) {
         // remove here
-        return false;
-    }
+        this.dashboardSrv
+            .removeWord(data._id)
+            .then(d => this.dashboardSrv.query({skip: this.skip, take: this.pageSize}))
+            .catch(er => alert(er));
 
-    onCloseDialog(){
-        this.openedItemDetail = false;
+        return false;
     }
 
     onSubmit() {
@@ -91,7 +69,7 @@ export class DashboardComponent implements OnInit {
 
         this.dashboardSrv
             .uploadFile(new FormData(form))
-            .then(d => this.dashboardSrv.query({ skip: this.skip, take: this.pageSize }))
+            .then(d => this.dashboardSrv.query({skip: this.skip, take: this.pageSize}))
             .catch(er => alert(er));
 
         return false;
